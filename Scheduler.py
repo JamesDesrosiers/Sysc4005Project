@@ -38,4 +38,4 @@ class event:
         handler = creator
 
     def handle(self):
-        creator.handle(self)
+        handler.handle(self)
