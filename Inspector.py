@@ -2,6 +2,7 @@ from Workstate import Workstate
 from Event import event
 from Component import Component
 from Log import log
+from random import randint
 
 class Inspector:
     #Variables for State
@@ -10,6 +11,7 @@ class Inspector:
     component = None
     stuckBuffer = None
     scheduler = None
+    cIndex = 0
 
     #TEMP Variables for working
     #TODO find duration based on data
@@ -43,14 +45,28 @@ class Inspector:
             else:
                 smallest_buffer.add_component(self.component)
                 self.beginWork()
-        elif isinstance(component, list):
-            #Add Code for doing inspector 2 here
-            pass
+        elif isinstance(self.component, list):
+            #Only I2 Should arrive here
+            if self.buffers[self.cIndex].isFull():
+                self.stuckBuffer = self.buffers[self.cIndex]
+                self.state = Workstate.IDLE
+            else:
+                self.buffers[self.cIndex].add_component(self.component[self.cIndex])
+                self.beginWork()
             
 
     #Fuction that adds a finish event to be handled
     def beginWork(self):
-        temp = event(self, self.duration + self.scheduler.time, "Inspection Complete")
+        #GEnerate useful event ID
+        if self.component == Component.C1:
+            id = "Ispection of C1 Complete"
+        else:
+            self.cIndex = randint(0,1)
+            if self.cIndex == 0:
+                id = "Inspection of C2 Comlete"
+            else:
+                id = "Inspection of C3 Complete"
+        temp = event(self, self.duration + self.scheduler.time, id)
         self.scheduler.addEvent(temp)
         self.state = Workstate.BUSY
 

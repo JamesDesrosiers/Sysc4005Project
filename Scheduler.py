@@ -77,7 +77,7 @@ def main():
     #Create the Entities
     #   Creating the Inspectors
     I1 = Inspector([QC1W1,QC1W2, QC1W3],Component.C1, schedule)
-    I2 = None
+    I2 = Inspector([QC2W2, QC3W3], [Component.C2, Component.C3], schedule)
 
     #   Creating the Workstations
     W1 = Workstation([QC1W1], Product.P1, schedule)
@@ -86,6 +86,7 @@ def main():
 
     #Add Inspectors to Scheduler
     schedule.entities.append(I1)
+    schedule.entities.append(I2)
     schedule.entities.append(W1)
     schedule.entities.append(W2)
     schedule.entities.append(W3)
