@@ -18,3 +18,6 @@ class Buffer:
             return None
 
         return self.queue.pop()
+
+    def isFull(self):
+        return self.get_length() >= 2
