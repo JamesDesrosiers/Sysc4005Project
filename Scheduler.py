@@ -81,10 +81,14 @@ def main():
 
     #   Creating the Workstations
     W1 = Workstation([QC1W1], Product.P1, schedule)
+    W2 = Workstation([QC1W2, QC2W2], Product.P2, schedule)
+    W3 = Workstation([QC1W3, QC3W3], Product.P3, schedule)
 
     #Add Inspectors to Scheduler
     schedule.entities.append(I1)
     schedule.entities.append(W1)
+    schedule.entities.append(W2)
+    schedule.entities.append(W3)
 
     #Add Initial events(Via the Idle Check)
     schedule.idleCheck()
@@ -102,8 +106,12 @@ def main():
             x.handle()
         #Checking if any of the idle entities can fire
         schedule.idleCheck()
-        
-    log("Simulation Ended")
+
+    log("Simulation Ended at Time: " + str(schedule.time))
+    log("REPORT:")
+    log("   Workstation W1 Produced: " + str(W1.products) + " units P1")
+    log("   Workstation W2 Produced: " + str(W2.products) + " units P2")
+    log("   Workstation W3 Produced: " + str(W3.products) + " units P3")
 
 if __name__ == "__main__":
     main()
