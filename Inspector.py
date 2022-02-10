@@ -4,14 +4,14 @@ import Component
 
 
 class Inspector:
-    id = None
     state = None
     buffers = None
+    component = None
 
-    def __init__(self, identifier, bf):
-        self.id = identifier  # not sure if this is needed
+    def __init__(self, bf, ctype):
         self.buffers = bf
         self.state = Workstate.IDLE
+        self.component = ctype
 
     def get_state(self):
         return self.state
@@ -29,6 +29,6 @@ class Inspector:
             if buffer.get_length() < smallest_buffer.get_length():
                 smallest_buffer = buffer
 
-        smallest_buffer.add_component(Component.C1)
+        smallest_buffer.add_component(self.component)
 
         self.state = Workstate.IDLE
