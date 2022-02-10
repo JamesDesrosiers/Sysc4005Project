@@ -1,6 +1,6 @@
 import Workstate
 import time
-from Scheduler import event
+from Event import event
 import Component
 
 class Inspector:
