@@ -10,6 +10,8 @@ from Product import Product
 from Event import event
 
 # Author: James
+SIMULATIONTIME = 100
+
 
 class Scheduler:
     
@@ -100,7 +102,7 @@ def main():
         #Go to next event
         x = schedule.popEvent()
         #temp code to handle having no events
-        if x == -1 or schedule.time > 50:
+        if x == -1 or schedule.time > SIMULATIONTIME:
             code = -1
         else:
             schedule.setTime(x.time)
