@@ -115,6 +115,8 @@ def main():
     log("   Workstation W1 Produced: " + str(W1.products) + " units P1")
     log("   Workstation W2 Produced: " + str(W2.products) + " units P2")
     log("   Workstation W3 Produced: " + str(W3.products) + " units P3")
+    log("   Inspector I1 Blocked for: " +str(I1.timeBlocked) + " Units Time")
+    log("   Inspector I2 Blocked for: " +str(I2.timeBlocked) + " Units Time")
 
 if __name__ == "__main__":
     main()

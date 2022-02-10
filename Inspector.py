@@ -13,6 +13,8 @@ class Inspector:
     scheduler = None
     cIndex = 0
 
+    lastActive = 0
+    timeBlocked = 0
     #TEMP Variables for working
     #TODO find duration based on data
     duration = 2
@@ -41,6 +43,7 @@ class Inspector:
             #Checking if the buffer can have something pushed
             if smallest_buffer.isFull():
                 self.stuckBuffer = smallest_buffer
+                self.lastActive = event.time
                 self.state = Workstate.IDLE
             else:
                 smallest_buffer.add_component(self.component)
@@ -49,6 +52,7 @@ class Inspector:
             #Only I2 Should arrive here
             if self.buffers[self.cIndex].isFull():
                 self.stuckBuffer = self.buffers[self.cIndex]
+                self.lastActive = event.time
                 self.state = Workstate.IDLE
             else:
                 self.buffers[self.cIndex].add_component(self.component[self.cIndex])
@@ -80,6 +84,7 @@ class Inspector:
                 return
             else:
                 self.stuckBuffer.add_component(self.component)
+                self.timeBlocked += self.scheduler.time - self.lastActive
                 self.beginWork()
         else:
             self.beginWork()
