@@ -1,3 +1,4 @@
+from Log import log
 class event:
     time = 0
     handler = None

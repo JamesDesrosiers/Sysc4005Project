@@ -1,5 +1,4 @@
-import Workstate
-import time
+from Workstate import Workstate
 from Event import event
 import Component
 
@@ -50,9 +49,9 @@ class Inspector:
 
     #Fuction that adds a finish event to be handled
     def beginWork(self):
-        temp = event(self, duration + scheduler.time)
-        scheduler.addEvent(temp)
-        self.state = Workstate.busy
+        temp = event(self, self.duration + self.scheduler.time)
+        self.scheduler.addEvent(temp)
+        self.state = Workstate.BUSY
 
     #There exists 2 reasons for an inspector to be idle
     #   1- The inspector has yet to become busy for the first time

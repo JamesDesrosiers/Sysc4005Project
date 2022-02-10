@@ -1,3 +1,12 @@
+from Workstate import Workstate
+from Inspector import Inspector
+from Buffer import Buffer
+from Component import Component
+from Log import log
+
+#Temp Import for Testing
+from Event import event
+
 class Scheduler:
     
     eventList = []
@@ -29,8 +38,8 @@ class Scheduler:
         active = 0
         for i in self.entities:
             checks += 1
-            if i.state == IDLE:
-                i.activate(self, self.time)
+            if i.state == Workstate.IDLE:
+                i.activate()
                 active += 1
         log("Time is at: " + str(self.time) + ", Checking Idle Entities")
         log("     " + str(checks) + " entites checked for idleness")
@@ -44,30 +53,30 @@ class Scheduler:
         x = self.eventList.pop(0)
         return x
 
-
-
-class event:
-    time = 0
-    handler = None
-    special = True
-
-    def __init__(self, creator, finish):
-        self.time = finish
-        self.handler = creator
-
-    def handle(self):
-        log("Event is asking Creator to handle")
-        self.handler.handle(self)
-
-def log(l):
-    print(l)
-    
 def main():
     #Create the Scheduler
     schedule = Scheduler()
 
+    #Creating the Queues
+    #Name Format: QC#W#
+    #Explanation
+    #   C# references the component the queue accepts
+    #   W# references which workstation uses the queue
+    QC1W1 = Buffer()
+    QC1W2 = Buffer()
+    QC1W3 = Buffer()
+
+    QC2W2 = Buffer()
+
+    QC3W3 = Buffer()
+    
     #Create the Entities
-    #schedule.entities.append(inspector())
+    #   Creating the Inspectors
+    I1 = Inspector([QC1W1,QC1W2, QC1W3],Component.C1, schedule)
+    I2 = None
+
+    #Add Inspectors to Scheduler
+    schedule.entities.append(I1)
     #schedule.entities.append(inspector())
     #schedule.entities.append(workstation())
     #schedule.entities.append(workstation())
