@@ -17,7 +17,7 @@ class Buffer:
         if self.queue.empty():
             return None
 
-        return self.queue.pop()
+        return self.queue.get()
 
     def isFull(self):
         return self.queue.full()

@@ -50,7 +50,7 @@ class Inspector:
 
     #Fuction that adds a finish event to be handled
     def beginWork(self):
-        temp = event(self, self.duration + self.scheduler.time)
+        temp = event(self, self.duration + self.scheduler.time, "Inspection Complete")
         self.scheduler.addEvent(temp)
         self.state = Workstate.BUSY
 

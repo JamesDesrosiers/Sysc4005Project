@@ -3,9 +3,13 @@ from Inspector import Inspector
 from Buffer import Buffer
 from Component import Component
 from Log import log
+from Workstation import Workstation
+from Product import Product
 
 #Temp Import for Testing
 from Event import event
+
+# Author: James
 
 class Scheduler:
     
@@ -75,12 +79,12 @@ def main():
     I1 = Inspector([QC1W1,QC1W2, QC1W3],Component.C1, schedule)
     I2 = None
 
+    #   Creating the Workstations
+    W1 = Workstation([QC1W1], Product.P1, schedule)
+
     #Add Inspectors to Scheduler
     schedule.entities.append(I1)
-    #schedule.entities.append(inspector())
-    #schedule.entities.append(workstation())
-    #schedule.entities.append(workstation())
-    #schedule.entities.append(workstation())
+    schedule.entities.append(W1)
 
     #Add Initial events(Via the Idle Check)
     schedule.idleCheck()
@@ -91,7 +95,7 @@ def main():
         #Go to next event
         x = schedule.popEvent()
         #temp code to handle having no events
-        if x == -1 and True:
+        if x == -1 or schedule.time > 50:
             code = -1
         else:
             schedule.setTime(x.time)
