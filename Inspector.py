@@ -1,6 +1,7 @@
 from Workstate import Workstate
 from Event import event
-import Component
+from Component import Component
+from Log import log
 
 class Inspector:
     #Variables for State
@@ -28,7 +29,7 @@ class Inspector:
 
     #TODO Finish code for Inpector 2's handle
     def handle(self, event):
-        if component == Component.C1:
+        if self.component == Component.C1:
             # Code that Finds the smallest buffer
             smallest_buffer = self.buffers[0]
             for buffer in self.buffers:
@@ -37,10 +38,10 @@ class Inspector:
             
             #Checking if the buffer can have something pushed
             if smallest_buffer.isFull():
-                self.stuckBuffer = smallest_Buffer
+                self.stuckBuffer = smallest_buffer
                 self.state = Workstate.IDLE
             else:
-                self.smallest_buffer.add_component(self.component)
+                smallest_buffer.add_component(self.component)
                 self.beginWork()
         elif isinstance(component, list):
             #Add Code for doing inspector 2 here

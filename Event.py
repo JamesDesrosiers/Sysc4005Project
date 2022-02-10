@@ -9,6 +9,6 @@ class event:
         self.handler = creator
 
     def handle(self):
-        log("*Event is asking Creator to handle")
-        log("*It is time: " + str(time))
+        log("**Event is asking Creator to handle")
+        log("**It is time: " + str(self.time))
         self.handler.handle(self)

@@ -35,13 +35,13 @@ class Scheduler:
 
     def idleCheck(self):
         checks = 0
+        log("Time is at: " + str(self.time) + ", Checking Idle Entities")
         active = 0
         for i in self.entities:
             checks += 1
             if i.state == Workstate.IDLE:
                 i.activate()
                 active += 1
-        log("Time is at: " + str(self.time) + ", Checking Idle Entities")
         log("     " + str(checks) + " entites checked for idleness")
         log("     " + str(active) + " entites have been activated")
         return
@@ -85,11 +85,6 @@ def main():
     #Add Initial events(Via the Idle Check)
     schedule.idleCheck()
 
-    #TEMP CODE for testing
-    temp = event(None, 2)
-    temp.special = True
-    schedule.addEvent(temp)
-
     #Simulation loop
     code = 1
     while code != -1:
@@ -99,11 +94,8 @@ def main():
         if x == -1 and True:
             code = -1
         else:
-            if x.special:
-                log("Special event is being run")
-            else:
-                x.handle()
             schedule.setTime(x.time)
+            x.handle()
         #Checking if any of the idle entities can fire
         schedule.idleCheck()
         

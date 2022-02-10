@@ -5,13 +5,13 @@ class Buffer:
     queue = None
 
     def __init__(self):
-        self.queue = queue.Queue()
+        self.queue = queue.Queue(2)
 
     def get_length(self):
-        return len(self.queue)
+        return self.queue.qsize()
 
     def add_component(self, component):
-        self.queue.append(component)
+        self.queue.put(component)
 
     def get_component(self):
         if self.queue.empty():
@@ -20,4 +20,4 @@ class Buffer:
         return self.queue.pop()
 
     def isFull(self):
-        return self.get_length() >= 2
+        return self.queue.full()
