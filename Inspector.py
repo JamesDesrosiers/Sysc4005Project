@@ -1,7 +1,5 @@
 import Workstate
 import time
-import Component
-
 
 class Inspector:
     state = None
