@@ -1,5 +1,6 @@
-import Workstate
-import time
+from Workstate import Workstate
+from Event import event
+from Log import log
 
 
 class Workstation:
@@ -7,12 +8,18 @@ class Workstation:
     state = None
     products = None
     product = None
+    schedule = None
 
-    def __init__(self, bf, ptype):
+    #TEMP Values for testing
+    duration = 3
+
+    def __init__(self, bf, ptype, sch):
         self.buffer = bf
         self.state = Workstate.IDLE
         self.product = ptype
-        self.products = []
+        self.products = 0
+        self.schedule = sch
+        
 
     def get_state(self):
         return self.state
@@ -27,19 +34,23 @@ class Workstation:
         return self.products
 
     def handle(self, event):
-        self.state = Workstate.BUSY
+        self.products += 1
+        self.state = Workstate.IDLE
 
-        # After sleep, send component to workstation
+    def activate(self):
+        #Check if components exist to do work
         has_empty = False
-        for buffer in self.buffers:
+        for buffer in self.buffer:
             if buffer.get_length() == 0:
                 has_empty = True
                 break
-
-        if not has_empty:  # If there are enough components, take components and make a product
-            time.sleep(event.time)
-            for buffer in self.buffers:
+        # If there are enough components, take components and add completion event
+        if not has_empty:  
+            for buffer in self.buffer:
                 buffer.get_component()
-            self.products.append(self.product)
-
-        self.state = Workstate.IDLE
+            temp = event(self, self.schedule.time + self.duration,
+                         "Workstation Complete")
+            self.schedule.addEvent(temp)
+            self.state = Workstate.BUSY
+            return
+            
