@@ -28,9 +28,6 @@ class Inspector:
     def get_state(self):
         return self.state
 
-    def get_id(self):
-        return self.id
-
     #TODO Finish code for Inpector 2's handle
     def handle(self, event):
         if self.component == Component.C1:

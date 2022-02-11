@@ -24,9 +24,6 @@ class Workstation:
     def get_state(self):
         return self.state
 
-    def get_id(self):
-        return self.id
-
     def get_product(self):
         return self.product
 
