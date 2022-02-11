@@ -10,6 +10,9 @@ class Workstation:
     product = None
     schedule = None
 
+    lastActive = 0
+    timeBlocked = 0
+
     #TEMP Values for testing
     duration = 3
 
@@ -32,6 +35,7 @@ class Workstation:
 
     def handle(self, event):
         self.products += 1
+        self.lastActive = event.time
         self.state = Workstate.IDLE
 
     def activate(self):
@@ -48,6 +52,7 @@ class Workstation:
             temp = event(self, self.schedule.time + self.duration,
                          "Workstation Complete")
             self.schedule.addEvent(temp)
+            self.timeBlocked = self.schedule.time - self.lastActive
             self.state = Workstate.BUSY
             return
             
