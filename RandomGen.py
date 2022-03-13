@@ -8,7 +8,7 @@ def uni_rand_gen(size):
     """
     Generates an array of random values
     :param size: The number of randomly generated values
-    :return: An array of random values
+    :return: An array of random uniform values
     """
     mod, multi = curr_date_int()
     seed = int(time.time())
@@ -55,7 +55,7 @@ def exp_rand_gen(lamb, size):
     """
     rand_vals = uni_rand_gen(size)
     for index in range(0, len(rand_vals)):
-        rand_vals[index] = -(np.log(rand_vals[index])) / lamb
+        rand_vals[index] = -(np.log(1 - rand_vals[index])) / lamb
 
     return rand_vals
 
