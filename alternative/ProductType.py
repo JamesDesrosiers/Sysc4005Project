@@ -7,7 +7,7 @@ Created on Thu Feb 10 07:16:44 2022
 from enum import Enum
 
 
-class Product(Enum):
+class ProductType(Enum):
     P1 = 1
     P2 = 2
     P3 = 3

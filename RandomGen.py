@@ -95,3 +95,4 @@ if __name__ == "__main__":
     df = pandas.DataFrame.from_dict(dictionary)
     df.to_csv('rand_gen_test.csv')
     print(df)
+
