@@ -21,7 +21,7 @@ if __name__ == "__main__":
     ws2_timing = exp_rand_gen_range(10.93212, 0.091, 59.078, num_samples).tolist()
     ws3_timing = exp_rand_gen_range(8.79558, 0.102, 51.418, num_samples).tolist()
 
-    print(sum(i1_c1_timing))
+    print(i1_c1_timing)
 
     b11 = Buffer(ComponentType.C1)
     b12 = Buffer(ComponentType.C1)
@@ -47,15 +47,16 @@ if __name__ == "__main__":
         pass
 
     print('done')
+    print('Num Products')
     print(len(ws1.get_products()))
     print(len(ws2.get_products()))
     print(len(ws3.get_products()))
 
-    print(i1.get_time_blocked())
-    print(i2.get_time_blocked())
-    print(ws1.get_time_blocked())
-    print(ws2.get_time_blocked())
-    print(ws3.get_time_blocked())
+    # print(i1.get_time_blocked())
+    # print(i2.get_time_blocked())
+    # print(ws1.get_time_blocked())
+    # print(ws2.get_time_blocked())
+    # print(ws3.get_time_blocked())
 
     # Process report summary
     print('Generating Report File\n')
@@ -91,6 +92,8 @@ if __name__ == "__main__":
     }
     for product in ws1.get_products():
         w1_dict['Product 1 Finish Time'].append(product.get_finish_time())
+    print('WS1 Time:')
+    print(sum(w1_dict['Product 1 Finish Time']))
     w1_df = pandas.DataFrame.from_dict(w1_dict)
     w1_df.to_csv('workstation_1.csv')
 
@@ -100,6 +103,8 @@ if __name__ == "__main__":
     }
     for product in ws2.get_products():
         w2_dict['Product 2 Finish Time'].append(product.get_finish_time())
+    print('WS2 Time:')
+    print(sum(w2_dict['Product 2 Finish Time']))
     w2_df = pandas.DataFrame.from_dict(w2_dict)
     w2_df.to_csv('workstation_2.csv')
 
@@ -109,6 +114,8 @@ if __name__ == "__main__":
     }
     for product in ws3.get_products():
         w3_dict['Product 3 Finish Time'].append(product.get_finish_time())
+    print('WS3 Time:')
+    print(sum(w3_dict['Product 3 Finish Time']))
     w3_df = pandas.DataFrame.from_dict(w3_dict)
     w3_df.to_csv('workstation_3.csv')
 

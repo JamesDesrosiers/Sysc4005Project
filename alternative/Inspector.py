@@ -35,15 +35,19 @@ class Inspector(threading.Thread):
             if not self.check_timings():
                 self.shutdown()
             else:
+                # product_time = time.time()
                 smallest_index = self.get_smallest_buffer_index()
+                if smallest_index == -1:
+                    continue
                 sleep_time = self.timings[smallest_index].pop()
-                time.sleep(sleep_time/100)
-                run = True
-                time_start = time.time()
-                while run:
-                    run = not self.put_component(smallest_index)
-                time_end = time.time()
-                self.time_blocked += (time_end - time_start)/100
+                time.sleep(sleep_time / 100)
+                run = not self.put_component(smallest_index, time.time())
+                if run:
+                    time_start = time.time()
+                    while run:
+                        run = not self.put_component(smallest_index, time.time())
+                    time_end = time.time()
+                    self.time_blocked += time_end - time_start
         print('Inspector shutting down...\n')
         sys.exit()
 
@@ -51,14 +55,16 @@ class Inspector(threading.Thread):
         get_len = lambda buffer: buffer.get_len()
         buffer_lengths = list(map(get_len, self.buffers))
         smallest_index = buffer_lengths.index(min(buffer_lengths))
+        if buffer_lengths[smallest_index] >= 2:
+            return -1
         return smallest_index
 
-    def put_component(self, index):
+    def put_component(self, index, product_time):
         buffer = self.buffers[index]
         component_type = buffer.get_component_type()
-        if buffer.get_len() < 2:
-            print(f'Inspector for {component_type} is adding to the buffer\n')
-            buffer.add_component(Component(component_type, time.time()))
+        if buffer.get_len() < 4:
+            # print(f'Inspector for {component_type} is adding to the buffer\n')
+            buffer.add_component(Component(component_type, product_time))
             return True
         else:
             # print(f'Inspector for {component_type} is blocked\n')

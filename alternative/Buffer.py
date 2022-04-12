@@ -9,7 +9,7 @@ class Buffer:
 
     def add_component(self, component):
         self.lock.acquire()
-        if len(self.storage) < 2 and self.component_type == component.get_component_type():
+        if len(self.storage) < 4 and self.component_type == component.get_component_type():
             self.storage.append(component)
         else:
             print(f'Storage for {self.component_type} is full\n')

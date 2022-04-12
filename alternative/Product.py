@@ -22,5 +22,3 @@ class Product:
             if create_time < smallest_time:
                 smallest_time = create_time
         return (self.create_time - smallest_time) * 100
-
-        return
